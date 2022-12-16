@@ -1,11 +1,11 @@
 package com.example.demo;
 
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-class TextMaker {
+public class TextMaker {
+
     private static TextMaker singleInstance = null;
 
     private TextMaker() {
@@ -18,9 +18,9 @@ class TextMaker {
         return singleInstance;
     }
 
-    Text madeText(String input, double xCell, double yCell, Group root) {
+    Text madeText(String input, double xCell, double yCell) {
         double length = GameScene.getLENGTH();
-        double fontSize = (3 * length) / 7.0;
+        double fontSize = (2 * length) / 8.0;
         Text text = new Text(input);
         text.setFont(Font.font(fontSize));
         text.relocate((xCell + (1.2)* length / 7.0), (yCell + 2 * length / 7.0));
@@ -43,7 +43,5 @@ class TextMaker {
         tempNumber = first.getY();
         first.setY(second.getY());
         second.setY(tempNumber);
-
     }
-
 }
