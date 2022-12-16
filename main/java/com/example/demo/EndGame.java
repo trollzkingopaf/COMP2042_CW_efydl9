@@ -2,6 +2,7 @@ package com.example.demo;
 
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -11,94 +12,54 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.Optional;
 
 
-/**
- * The EndGame class switches from the game scene to the end game screen to the user.
- * It has a singleton pattern implemented to ensure a single instance in the game application.
- *
- * @author Desmond Jun Hong, Lau-modified
- */
 public class EndGame {
     private static EndGame singleInstance = null;
-
-    /**
-     * Private constructor to construct and prevent instantiation of the EndGame class.
-     */
     private EndGame(){
 
     }
-
-    /**
-     * Returns the single instance of the EndGame class.
-     *
-     * @return the single instance of the EndGame class
-     */
     public static EndGame getInstance(){
         if(singleInstance == null)
             singleInstance= new EndGame();
         return singleInstance;
     }
 
-    /**
-     * Displays the end game screen to the user
-     *
-     * @param root The root node of the scene to which the end game screen will be added
-     * @param primaryStage The primaryStage and a window container of the application
-     * @param score The final score achieved by the player at the end of the game
-     * @throws IOException If there is an error reading from the input stream
-     */
-    public void endGameShow(Group root, Stage primaryStage, long score) throws IOException {
-        Text labelText = new Text("GAME OVER");
-        if(GameScene.win <= 2048) {
-            labelText.setText("YOU WIN! :)");
-            labelText.relocate(235,250);
+    public void endGameShow(Scene endGameScene, Group root, Stage primaryStage,long score){
+        Text text = new Text("GAME OVER");
+        text.relocate(250,250);
+        text.setFont(Font.font(80));
+        root.getChildren().add(text);
 
-        } else {
-            labelText.setText("GAME OVER :(");
-            labelText.relocate(220,250);
-        }
-        labelText.setFill(Color.WHITE);
-        labelText.setFont(Font.font(80));
-        root.getChildren().add(labelText);
 
-        // Displays the score label
-        Text scoreLabeltext = new Text("SCORE :");
-        scoreLabeltext.setFill(Color.WHITE);
-        scoreLabeltext.relocate(310, 420);
-        scoreLabeltext.setFont(Font.font(80));
-        root.getChildren().add(scoreLabeltext);
-
-        // Displays the final score
-        Text scoreText = new Text(score + "");
-        scoreText.setFill(Color.WHITE);
-        scoreText.relocate(380,600);
+        Text scoreText = new Text(score+"");
+        scoreText.setFill(Color.BLACK);
+        scoreText.relocate(250,600);
         scoreText.setFont(Font.font(80));
         root.getChildren().add(scoreText);
 
-        // Displays a quit button for the player to exit the game application
         Button quitButton = new Button("QUIT");
         quitButton.setPrefSize(100,30);
-        quitButton.setTextFill(Color.WHITE);
-        quitButton.setStyle("-fx-background-color: #000000");
+        quitButton.setTextFill(Color.PINK);
         root.getChildren().add(quitButton);
-        quitButton.relocate(400,800);
-        quitButton.setFocusTraversable(false);
+        quitButton.relocate(100,800);
+        quitButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Quit Dialog");
+                alert.setHeaderText("Quit from this page");
+                alert.setContentText("Are you sure?");
 
-        // Sets the mouse action for the quit button
-        quitButton.setOnMouseClicked(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Exit");
-            alert.setHeaderText("Exit from 2048");
-            alert.setContentText("Are you sure?");
-
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK){
-                root.getChildren().clear();
-                primaryStage.close();
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK){
+                    root.getChildren().clear();
+                }
             }
         });
+
+
+
     }
 }
