@@ -14,19 +14,42 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
+
+/**
+ * The EndGame class switches from the game scene to the end game screen to the user.
+ * It has a singleton pattern implemented to ensure a single instance in the game application.
+ *
+ * @author Desmond Jun Hong, Lau-modified
+ */
 public class EndGame {
     private static EndGame singleInstance = null;
 
+    /**
+     * Private constructor to construct and prevent instantiation of the EndGame class.
+     */
     private EndGame(){
 
     }
 
+    /**
+     * Returns the single instance of the EndGame class.
+     *
+     * @return the single instance of the EndGame class
+     */
     public static EndGame getInstance(){
         if(singleInstance == null)
             singleInstance= new EndGame();
         return singleInstance;
     }
 
+    /**
+     * Displays the end game screen to the user
+     *
+     * @param root The root node of the scene to which the end game screen will be added
+     * @param primaryStage The primaryStage and a window container of the application
+     * @param score The final score achieved by the player at the end of the game
+     * @throws IOException If there is an error reading from the input stream
+     */
     public void endGameShow(Group root, Stage primaryStage, long score) throws IOException {
         Text labelText = new Text("GAME OVER");
         if(GameScene.win <= 2048) {

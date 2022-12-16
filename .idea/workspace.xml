@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="40045388-3de8-4fbb-bec2-28ad95f2ebff" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +27,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Java/JFX/openjfx-20-ea+4_windows-x64_bin-sdk/javafx-sdk-20/lib",
-    "project.structure.last.edited": "Libraries",
+    "jdk.selected.JAVA_MODULE": "17",
+    "last_opened_file_path": "C:/Uni/DMS/COMP2042_CW_efydl9/main/java/module-info.java",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
   }
@@ -42,8 +46,10 @@
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.example.demo.Main" />
-      <module name="COMP2042_CW_efydl9" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.example.demo.*" />
@@ -68,7 +74,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1671200160884</updated>
-      <workItem from="1671200162034" duration="4127000" />
+      <workItem from="1671200162034" duration="4926000" />
     </task>
     <servers />
   </component>

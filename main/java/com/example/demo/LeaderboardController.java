@@ -23,6 +23,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+
+/**
+ * This class contains information for Leaderboard FXML Controller Scene.
+ * It displays the top three high-scores in a table or a podium depending on the button toggled by the user.
+ * It also provides a back button to return to the Main Menu FXML Controller screen.
+ *
+ * @author Desmond Jun Hong, Lau
+ */
 public class LeaderboardController implements Initializable {
 
     @FXML
@@ -50,6 +58,12 @@ public class LeaderboardController implements Initializable {
 
     ArrayList<Account> displayLB = new ArrayList<>();
 
+    /**
+     * Initialises the Leaderboard FXML Controller Scene by reading player's scores from an external leaderboard text file and display a table view with all the high scores while hiding the podium by default.
+     * The default button to display is set to contain "Podium"
+     * @param url the URL of the FXML file
+     * @param rb the resource bundle for the localisation of resources
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         podiumBtn.setVisible(false);
@@ -70,6 +84,12 @@ public class LeaderboardController implements Initializable {
         Account.accounts.clear();
     }
 
+    /**
+     * Switches to the Main Menu FXML Controller Screen when the "Back" button is clicked.
+     *
+     * @param event the action event triggered by the mouse button click
+     * @throws IOException An error exception if the FXML file for the Main Menu FXML Controller Scene cannot be found
+     */
     public void switchToMainMenuScene(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/com/example/demo/Main_Menu.fxml"));
         Scene menuScene = new Scene(root);
@@ -80,6 +100,11 @@ public class LeaderboardController implements Initializable {
         menuStage.show();
     }
 
+    /**
+     * Toggles to display between a Podium containing the Top 3 highest-scores and a Table View containing all the records of past to present player's username and scores when the "Podium" button and "Table" mouse button is clicked back and forth.
+     *
+     * @param event the action event triggered by the mouse button click
+     */
     public void toggleView(ActionEvent event) {
 
         podiumBtn.setVisible(false);

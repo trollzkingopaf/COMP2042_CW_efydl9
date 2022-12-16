@@ -15,6 +15,12 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * The GameScene class for the creation and management of the game scene in the game application.
+ * It handles the logic of the game board which includes cells movement, checking the conditions for a winning 2048 cell and the updating the player's score
+ *
+ * @author Desmond Jun Hong, Lau-modified
+ */
 public class GameScene {
 
     // Initialises a flag indicating whether the game detects a 2048 cell to obtain the player's permission to choice to continue playing or switching to the EndGame scene.
@@ -53,15 +59,28 @@ public class GameScene {
     // Initialises the player's score of the game to 0 at the start of game
     private long score = 0;
 
+    /**
+     * Sets the grid size of the game to a two-dimensional grid.
+     *
+     * @param number the number of cells in the two-dimensional grid
+     */
     public static void setN(int number) {
         n = number;
         LENGTH = (HEIGHT - ((n + 1) * distanceBetweenCells)) / (double) n;
     }
 
+    /**
+     * Returns the length of each individual cell in the game grid
+     *
+     * @return the length of each individual cell in the game grid
+     */
     static double getLENGTH() {
         return LENGTH;
     }
 
+    /**
+     * Fills a random empty cell with a 2 or 4 after checking the current state of game grid.
+     */
     private void randomFillNumber() {
 
         Cell[][] emptyCells = new Cell[n][n];
@@ -114,6 +133,12 @@ public class GameScene {
         }
     }
 
+
+    /**
+     * Checks if the game grid if there is an empty cell
+     *
+     * @return value of 1 if there are empty cells and value of -1 if there are none
+     */
     private int haveEmptyCell() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -125,6 +150,14 @@ public class GameScene {
         return -1;
     }
 
+    /**
+     * Finds the i (horizontal) and j (vertical) two-dimensional coordinates of the next non-empty cell in a given direction.
+     *
+     * @param i the row index of the current cell
+     * @param j the column index of the current cell
+     * @param direct the direction to move to, 'l' for left, 'r' for right, 'd' for down and 'u' for up
+     * @return the i and j coordinates  of the non-empty cell in the appointed direction
+     */
     private int passDestination(int i, int j, char direct) {
         int coordinate = 0;
 
@@ -185,10 +218,18 @@ public class GameScene {
         return -1;
     }
 
+    /**
+     * A flag to compare the previous array state and current array state
+     *
+     * @return a flag that returns true if both array state are not identical, false otherwise
+     */
     private boolean compareArray() {
         return !Arrays.deepEquals(initialArray, updatedArray);
     }
 
+    /**
+     * Move all cells in the grid to the left-most grid bound
+     */
     private void moveLeft() {
         for (int i = 0; i < n; i++) {
             for (int j = 1; j < n; j++) {
@@ -200,6 +241,9 @@ public class GameScene {
         }
     }
 
+    /**
+     * Move all cells in the grid to the right-most grid bound
+     */
     private void moveRight() {
         for (int i = 0; i < n; i++) {
             for (int j = n - 1; j >= 0; j--) {
@@ -211,6 +255,10 @@ public class GameScene {
         }
     }
 
+
+    /**
+     * Move all cells in the grid to the uppermost grid bound
+     */
     private void moveUp() {
         for (int j = 0; j < n; j++) {
             for (int i = 1; i < n; i++) {
@@ -222,6 +270,9 @@ public class GameScene {
         }
     }
 
+    /**
+     * Move all cells in the grid to the lowest grid bound
+     */
     private void moveDown() {
         for (int j = 0; j < n; j++) {
             for (int i = n - 1; i >= 0; i--) {
@@ -233,6 +284,16 @@ public class GameScene {
         }
     }
 
+    /**
+     * A method that checks if the destination cell is a valid destination for a horizontal move.
+     * A valid destination is defined as a cell that is not out of bounds and has never been modified that has the same values as the current cell.
+     *
+     * @param i the row index of the current cell
+     * @param j the column index of the current cell
+     * @param des the destination index for the current cell
+     * @param sign an integer representing the direction of the move (value of -1 for left movement and value of 1 for right movement)
+     * @return A flag boolean value indicating if the destination cell is a valid move
+     */
     private boolean isValidDesH(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0) {
             return cells[i][des + sign].getNumber() == cells[i][j].getNumber() && !cells[i][des + sign].getModify()
@@ -241,6 +302,15 @@ public class GameScene {
         return false;
     }
 
+    /**
+     * A method that moves a cell horizontally to its destination if the destination is valid.
+     * The method also updates the score and the winning factor.
+     *
+     * @param i the row index of the current cell
+     * @param j the column index of the current cell
+     * @param des the destination index for the current cell
+     * @param sign an integer representing the direction of the move (value of -1 for left movement and value of 1 for right movement)
+     */
     private void moveHorizontally(int i, int j, int des, int sign) {
         if (isValidDesH(i, j, des, sign)) {
             cells[i][j].adder(cells[i][des + sign]);
@@ -256,6 +326,16 @@ public class GameScene {
         }
     }
 
+    /**
+     * A method that checks if the destination cell is a valid destination for a vertical move.
+     * A valid destination is defined as a cell that is not out of bounds and has never been modified that has the same values as the current cell.
+     *
+     * @param i the row index of the current cell
+     * @param j the column index of the current cell
+     * @param des the destination index for the current cell
+     * @param sign an integer representing the direction of the move (value of -1 for up movement and value of 1 for down movement)
+     * @return A flag boolean value indicating if the destination cell is a valid move
+     */
     private boolean isValidDesV(int i, int j, int des, int sign) {
         if (des + sign < n && des + sign >= 0) {
             return cells[des + sign][j].getNumber() == cells[i][j].getNumber() && !cells[des + sign][j].getModify()
@@ -264,6 +344,16 @@ public class GameScene {
         return false;
     }
 
+    /**
+     * A method that moves a cell vertically to its destination if the destination is valid.
+     * The method also updates the score and the winning factor.
+     *
+     * @param i the row index of the current cell
+     * @param j the column index of the current cell
+     * @param des the destination index for the current cell
+     * @param sign an integer representing the direction of the move (value of -1 for up movement and value of 1 for down movement)
+     * @return A flag boolean value indicating if the destination cell is a valid move
+     */
     private void moveVertically(int i, int j, int des, int sign) {
         if (isValidDesV(i, j, des, sign)) {
             cells[i][j].adder(cells[des + sign][j]);
@@ -279,6 +369,13 @@ public class GameScene {
         }
     }
 
+    /**
+     * This method checks if the cells at the specified indices have the same value.
+     *
+     * @param i the row index of the cell
+     * @param j the column index of the cell
+     * @return true if the cells at indices i and j have the same number, false otherwise
+     */
     private boolean haveSameNumberNearly(int i, int j) {
         if (i < n - 1 && j < n - 1) {
             if (cells[i + 1][j].getNumber() == cells[i][j].getNumber())
@@ -288,6 +385,11 @@ public class GameScene {
         return false;
     }
 
+    /**
+     * This method validates if the cells on the game board cannot be moved for the current state of array.
+     *
+     * @return A flag of true if the cells cannot be moved, false otherwise
+     */
     private boolean canNotMove() {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -299,6 +401,20 @@ public class GameScene {
         return true;
     }
 
+
+    /**
+     * This method creates the game scene and handles the game logic. It displays the player's username and score at the top of the game screen.
+     * It randomly fills the game grid with 2 or 4 numbered cells and listens for arrow key inputs to move the cells.
+     * If the player has reaches the win condition (value of 2048), the user can choose to continue or terminate the game.
+     * If there is no valid move, the game application switches scene to the EndGame scene.
+     * Finally, the player's game progression is then stored into an the Account Object arraylist and written to the external leaderboard text file before switching to the EndGame scene.
+     *
+     * @param gameScene the scene for the game
+     * @param root the root node for the game scene
+     * @param primaryStage The primaryStage and a window container of the game application
+     * @param endGameScene The endGameStage and a window container of the exit game screen
+     * @param endGameRoot The root node for the end game scene
+     */
     public void game(Scene gameScene, Group root, Stage primaryStage, Scene endGameScene, Group endGameRoot) {
         this.root = root;
         for (int i = 0; i < n; i++) {
